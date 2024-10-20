@@ -12,14 +12,16 @@ class Solution {
 public:
     ListNode* reverseKGroup(ListNode* head, int k) {
         
-        ListNode* curr = head;
-        ListNode* prev = NULL;
-        ListNode* next = NULL;
-        
         //base case
         if(head == NULL){
             return NULL;
         }
+        
+        ListNode* curr = head;
+        ListNode* prev = NULL;
+        ListNode* next = NULL;
+        
+        
         
         // Check if there are at least k nodes to reverse
         ListNode* check = head;
