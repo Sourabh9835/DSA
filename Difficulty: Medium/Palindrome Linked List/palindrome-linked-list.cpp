@@ -37,6 +37,7 @@ struct Node {
 #include <vector>
 class Solution {
     private:
+    /*
     bool checkPalindrome(vector<int> arr){
         int n = arr.size();
         int s = 0;
@@ -53,9 +54,41 @@ class Solution {
         
         return 1;
     }
+    */
+    
+    
+    //finding middle
+    Node* getMid(Node* head){
+        Node* slow = head;
+        Node* fast = head -> next;
+        
+        while(fast != NULL && fast -> next != NULL){
+            fast = fast -> next -> next;
+            slow = slow -> next;
+        }
+        return slow;
+    }
+    
+    //reversing the list after middle
+    Node* reverseList(Node* head){
+        Node* curr = head;
+        Node* prev = NULL;
+        Node* next = NULL;
+        
+        while(curr != NULL){
+            next = curr -> next;
+            curr -> next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+    
   public:
     // Function to check whether the list is palindrome.
     bool isPalindrome(Node *head) {
+        
+        /*
         vector<int> arr;
         
         Node* temp = head;
@@ -64,6 +97,40 @@ class Solution {
             temp = temp -> next;
         }
         return checkPalindrome(arr);
+        
+        */
+        
+        //if list is empty or only one element is present
+        if(head == NULL || head -> next == NULL)
+        return true;
+        
+        
+        //step 1: find middle of list
+        Node* middle = getMid(head);
+        
+        //step 2: reverse the list from middle
+        Node* temp = middle -> next;
+        middle -> next = reverseList(temp);
+        
+        //step 3: compare two halves if it is palindrome or not
+        Node* head1 = head;
+        Node* head2 = middle -> next;
+        
+        while(head2 != NULL){
+            if(head1 -> data != head2 -> data){
+                return false;
+            }
+            
+            head1 = head1 -> next;
+            head2 = head2 -> next;
+        }
+        
+        
+        //step 4 : repeating the step 2 so that list is not manipulated
+        temp = middle -> next;
+        middle -> next = reverseList(temp);
+        
+        return true;
     }
 };
 
